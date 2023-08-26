@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 <style>
  body {
     font-family: Arial, sans-serif;
@@ -130,25 +133,72 @@
             </a>
           </div>
         <div class="supplier-details">
-            <div class="supplier-name">Batelec Electricity Corporation</div>
+            <div style="text-align: center;"><img src="https://www.batelec1.com.ph/asset/images/batelec1logowhite.png" width="65px" height="65px"></div>
+            <div class="supplier-name"> Batelec Electricity Corporation</div>
             <div class="detail-item">
               <span class="detail-label">Amount I'm paying:</span>
-              <input type="text" class="detail-input" placeholder="Enter amount" />
+              <input type="text" class="detail-input" id="amount" placeholder="Enter amount" />
             </div>
             <div class="detail-item">
               <span class="detail-label">Account No.:</span>
-              <input type="text" class="detail-input" placeholder="Enter account number" />
+              <input type="text" class="detail-input" id="accountNo" placeholder="Enter account number" />
             </div>
             <div class="detail-item">
               <span class="detail-label">Account Name:</span>
-              <input type="text" class="detail-input" placeholder="Enter account name" />
+              <input type="text" class="detail-input" id="accountName" placeholder="Enter account name" />
             </div>
             <div class="detail-item">
               <span class="detail-label">Email:</span>
-              <input type="email" class="detail-input" placeholder="Enter email (Optional)" />
+              <input type="email" class="detail-input" id="email" placeholder="Enter email (Optional)" />
             </div>
-            <button class="next-button">Next</button>
+            <button class="next-button" id="nextButton">Next</button>
           </div>
     </div>
 </body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+<script>
+  const nextButton = document.getElementById("nextButton");
+  const nameInput = document.getElementById("accountName");
+  const accNumInput = document.getElementById("accountNo");
+  const amtInput = document.getElementById("amount");
+  const mailInput = document.getElementById("email");
+
+  nextButton.addEventListener("click", function() {
+      // Update modal content with user input
+      document.getElementById("nameOut").textContent = "Account Name: " + nameInput.value;
+      document.getElementById("amtOut").textContent = "Amount: " + amtInput.value;
+      document.getElementById("numOut").textContent = "Account Number: " + accNumInput.value;
+      document.getElementById("mailOut").textContent = "Email: " + mailInput.value;
+
+      // Show the Bootstrap modal
+      $('#myModal').modal('show');
+  });
+</script> 
+
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmation Modal</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="nameOut"></p>
+                <p id="amtOut"></p>
+                <p id="numOut"></p>
+                <p id="mailOut"></p>
+                <p>Do you want to proceed?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a href="confirmation.htm" class="btn btn-primary">Confirm</a>
+            </div>
+        </div>
+    </div>
+</div>
 </html>
