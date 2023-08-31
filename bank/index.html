@@ -76,6 +76,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
+
   }
 
   .category {
@@ -96,6 +97,12 @@
     font-size: 24px; 
     margin-bottom: 8px;
   }
+  .text-center {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Adjust the number of columns as needed */
+    gap: 10px;
+    justify-content: center; /* Center the grid horizontally */
+}
 
 </style>
 <title>Pay Bills</title>
@@ -115,7 +122,7 @@
       </div>
       <!-- You can list your favorite billers here -->
     </div>
-    <div class="categories">
+    <div class="categories text-center  ">
         <a href="electricity.html" class="category">
             <div class="category-icon">💡</div>
             Electricity
