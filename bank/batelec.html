@@ -7,6 +7,14 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
 
 <style>
+  table {
+    border-collapse: collapse;
+  }
+
+  td {
+    padding-left: 15px;
+    padding-bottom: 10px;
+  }
  body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
@@ -167,16 +175,26 @@
   const amtInput = document.getElementById("amount");
   const mailInput = document.getElementById("email");
 
-  nextButton.addEventListener("click", function() {
+  // nextButton.addEventListener("click", function() {
       
-      // document.getElementById("accountName").textContent = "Account Name: " + nameInput.value;
-      // document.getElementById("amtOut").textContent = "Amount: " + amtInput.value;
-      // document.getElementById("numOut").textContent = "Account Number: " + accNumInput.value;
-      // document.getElementById("mailOut").textContent = "Email: " + mailInput.value;
+  //     document.getElementById("nameOut").textContent = "Account Name: " + nameInput.value;
+  //     document.getElementById("amtOut").textContent = "Amount: " + amtInput.value;
+  //     document.getElementById("numOut").textContent = "Account Number: " + accNumInput.value;
+  //     document.getElementById("mailOut").textContent = "Email: " + mailInput.value;
 
      
-      $('#myModal').modal('show');
+  //     $('#myModal').modal('show');
+  // });
+
+  nextButton.addEventListener("click", function() {
+    document.getElementById("nameOut").textContent = nameInput.value;
+    document.getElementById("amtOut").textContent = amtInput.value;
+    document.getElementById("numOut").textContent = accNumInput.value;
+    document.getElementById("mailOut").textContent = mailInput.value;
+
+    $('#myModal').modal('show');
   });
+
 </script> 
 
 <script>
@@ -195,7 +213,7 @@ $(document).on('click', '.btn-primary', function() {
     confirmButtonText: "OK"
   }).then((result) => {
     if (result.isConfirmed) {
-      window.location.href = "electricity.html"; 
+      window.location.href = "receipt.html"; 
     }
   });
 });
@@ -210,7 +228,31 @@ $(document).on('click', '.btn-primary', function() {
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        <p>Do you want to proceed?</p>
+        <!-- <p id="nameOut"></p>
+        <p id="amtOut"></p>
+        <p id="numOut"></p>
+        <p id="mailOut"></p> -->
+
+        <!-- HTML structure for the table -->
+          <table>
+            <tr>
+              <td>Account Name:</td>
+              <td id="nameOut"></td>
+            </tr>
+            <tr>
+              <td>Amount:</td>
+              <td id="amtOut"></td>
+            </tr>
+            <tr>
+              <td>Account Number:</td>
+              <td id="numOut"></td>
+            </tr>
+            <tr>
+              <td>Email:</td>
+              <td id="mailOut"></td>
+            </tr>
+          </table>
+        <p><b>Do you want to proceed?</b></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
