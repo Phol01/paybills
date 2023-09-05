@@ -12,8 +12,12 @@
   }
 
   td {
-    padding-left: 15px;
+    /*padding-left: 15px;*/
     padding-bottom: 10px;
+    text-align: left;
+  }
+  td:nth-child(2) {
+    padding-left: 20px; /* Adjust the value to increase or decrease left padding */
   }
  body {
     font-family: Arial, sans-serif;
@@ -126,13 +130,30 @@
   .next-button:hover {
     background-color: #0056b3;
   }
+  .circle {
+    width: 65px; /* Adjust this value to control the size of the circle */
+    height: 65px; /* Make the width and height equal for a perfect circle */
+    border-radius: 50%; /* Make it a circle by using 50% border radius */
+    overflow: hidden; /* Hide any content that goes beyond the circle */
+    text-align: center; /* Center the image horizontally within the circle */
+    margin: 0 auto; /* Center the circle horizontally on the page */
+    background-color: #f0f0f0; /* Set a background color if you want a circular container */
+}
+.circle img {
+    max-width: 100%; /* Make the image fill the circular container */
+    height: auto; /* Maintain the aspect ratio of the image */
+    display: block; /* Remove any extra spacing below the image */
+    margin: 0 auto; /* Center the image horizontally within the circle */
+}
+
+  
 </style>
 <title>Pay Bills</title>
 </head>
 <body>
     <div class="container">
         <div class="back-button">
-            <a href="electricity.html">
+            <a href="waterbill.php">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <path d="M0 0h24v24H0z" fill="none"/>
                 <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
@@ -141,8 +162,10 @@
             </a>
           </div>
         <div class="supplier-details">
-            <div style="text-align: center;"><img src="https://www.batelec1.com.ph/asset/images/batelec1logowhite.png" width="65px" height="65px"></div>
-            <div class="supplier-name"> Batelec Electricity Corporation</div>
+            <div class="circle">
+            <div style="text-align: center;"><img src="https://ph.top10place.com/img_files/1413492542198392" width="65px" height="65px"></div>
+            </div>
+            <div class="supplier-name" id="merchant"><center>Prime Water Nasugbu</center></div>
             <div class="detail-item">
               <span class="detail-label">Amount I'm paying:</span>
               <input type="text" class="detail-input" id="amount" placeholder="Enter amount" />
@@ -175,32 +198,59 @@
   const amtInput = document.getElementById("amount");
   const mailInput = document.getElementById("email");
 
-  // nextButton.addEventListener("click", function() {
-      
-  //     document.getElementById("nameOut").textContent = "Account Name: " + nameInput.value;
-  //     document.getElementById("amtOut").textContent = "Amount: " + amtInput.value;
-  //     document.getElementById("numOut").textContent = "Account Number: " + accNumInput.value;
-  //     document.getElementById("mailOut").textContent = "Email: " + mailInput.value;
-
-     
-  //     $('#myModal').modal('show');
-  // });
-
   nextButton.addEventListener("click", function() {
-    document.getElementById("nameOut").textContent = nameInput.value;
-    document.getElementById("amtOut").textContent = amtInput.value;
-    document.getElementById("numOut").textContent = accNumInput.value;
-    document.getElementById("mailOut").textContent = mailInput.value;
+      
+      // document.getElementById("nameOut").textContent = "Account Name: " + nameInput.value;
+      // document.getElementById("amtOut").textContent = "Amount: " + amtInput.value;
+      // document.getElementById("numOut").textContent = "Account Number: " + accNumInput.value;
+      // document.getElementById("mailOut").textContent = "Email: " + mailInput.value;
+      document.getElementById("nameOut").textContent = nameInput.value;
+      document.getElementById("amtOut").textContent = amtInput.value;
+      document.getElementById("numOut").textContent = accNumInput.value;
+      document.getElementById("mailOut").textContent = mailInput.value;
 
-    $('#myModal').modal('show');
+      
+      $('#myModal').modal('show');
   });
-
 </script> 
 
 <script>
+  $(document).ready(function() {
+    $("#cropsBtn").click(function(e) {
+        if ($('#cropsForm')[0].checkValidity()) {
+            e.preventDefault();
 
+              var formData = new FormData($('#cropsForm')[0]);
+              formData.append('action', 'inputHarvest');
+              $.ajax({
+                  url: 'php/action.php',
+                  method: 'post',
+                  data: formData,
+                  contentType: false,
+                  processData: false,
+                  success: function(response) {
+                      if (response === 'inputHarvest') {
+                          Swal.fire({
+                              icon: 'success',
+                              text: 'Your input has been Recorded!',
+                              allowOutsideClick: false,
+                              allowEscapeKey: false
+                          }).then(function() {
+                              // this gets run after the OK button is clicked
+                              window.location = 'main.php'
+                          });
+
+                      } else {
+                          alert(response);
+                      }
+                  }
+                });
+          }
+      })
+  });
+  
   nextButton.addEventListener("click", function() {
-
+    
     $('#myModal').modal('show');
   });
 
@@ -213,7 +263,7 @@ $(document).on('click', '.btn-primary', function() {
     confirmButtonText: "OK"
   }).then((result) => {
     if (result.isConfirmed) {
-      window.location.href = "receipt.html"; 
+      window.location.href = "receipt.php";
     }
   });
 });
@@ -232,9 +282,7 @@ $(document).on('click', '.btn-primary', function() {
         <p id="amtOut"></p>
         <p id="numOut"></p>
         <p id="mailOut"></p> -->
-
-        <!-- HTML structure for the table -->
-          <table>
+        <table>
             <tr>
               <td>Account Name:</td>
               <td id="nameOut"></td>

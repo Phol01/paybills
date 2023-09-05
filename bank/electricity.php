@@ -154,19 +154,6 @@
     font-size: 20px;
     margin-left: 10px;
   }
-  .supplier-logo {
-    width: 40px; 
-    height: 40px; 
-    border-radius: 50%; 
-    overflow: hidden; 
-    margin-right: 10px; 
-    background-color: #f0f0f0; 
-}
-.supplier-logo img {
-    width: 100%; 
-    height: auto; 
-}
-
 
   
 </style>
@@ -175,7 +162,7 @@
 <body>
 <div class="container">
     <div class="back-button">
-      <a href="index.html">
+      <a href="index.php">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
           <path d="M0 0h24v24H0z" fill="none"/>
           <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
@@ -188,11 +175,11 @@
       <button>Search</button>
     </div>
     <div class="supplier-list">
-        <a href="nawasa.html" class="supplier-item">
+        <a href="batelec.php" class="supplier-item">
           <div class="supplier-logo">
-            <img src="https://ph.top10place.com/img_files/1413492542198392" width="35px" alt="Logo">
+            <img src="https://www.batelec1.com.ph/asset/images/batelec1logowhite.png" width="35px" alt="Logo">
           </div>
-          <div class="supplier-name">&nbsp;Nasugbu Water Distruct</div>
+          <div class="supplier-name">&nbsp;Batangas Electric 1</div>
           <div class="supplier-icon">></div>
         </a>
         <!-- Add more suppliers here -->
