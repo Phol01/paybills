@@ -30,29 +30,39 @@ if ($user) {
 
 // Process the payment and deduct from the user's balance
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  // Get the payment amount from the form
-  $paymentAmount = isset($_POST['amount']) ? floatval($_POST['amount']) : 0;
+    // Get the payment amount from the form
+    $paymentAmount = isset($_POST['amount']) ? floatval($_POST['amount']) : 0;
+    $accountNo = isset($_POST['accountNo']) ? $_POST['accountNo'] : '';
+    $accountName = isset($_POST['accountName']) ? $_POST['accountName'] : '';
 
-  // Check if the user has sufficient balance
-  if ($userBalance >= $paymentAmount) {
-      // Deduct the payment amount from the user's balance
-      $newBalance = $userBalance - $paymentAmount;
+    // Check if the user has sufficient balance
+    if ($userBalance >= $paymentAmount) {
+        // Deduct the payment amount from the user's balance
+        $newBalance = $userBalance - $paymentAmount;
 
-      // Update the user's balance in the session
-      $_SESSION['balance'] = $newBalance;
+        // Update the user's balance in the session
+        $_SESSION['balance'] = $newBalance;
 
-      // Update the user's balance in the database
-      $updateSql = "UPDATE users SET balance = ? WHERE user_id = ?";
-      $updateStmt = $pdo->prepare($updateSql);
-      $updateStmt->execute([$newBalance, $userID]);
+        // Update the user's balance in the database
+        $updateSql = "UPDATE users SET balance = ? WHERE user_id = ?";
+        $updateStmt = $pdo->prepare($updateSql);
+        $updateStmt->execute([$newBalance, $userID]);
 
-      // Redirect to the same page to display the updated balance
-      header("Location: batelec.php");
-      exit();
-  } else {
-      // Insufficient balance, you can handle it as needed (e.g., display an error message)
-      $paymentError = "Insufficient balance. Please top up your account.";
-  }
+        // Insert payment data into the trx_water table
+        $insertSql = "INSERT INTO trx_water (billerID, merchantID, user_id, accNum, amount, accName) VALUES (?, ?, ?, ?, ?, ?)";
+        $billerID = '2'; // Replace with your biller ID
+        $merchantID = '2'; // Replace with your merchant ID
+
+        $insertStmt = $pdo->prepare($insertSql);
+        $insertStmt->execute([$billerID, $merchantID, $userID, $accountNo, $paymentAmount, $accountName]);
+
+        // Redirect to the same page to display the updated balance
+        header("Location: nawasa.php");
+        exit();
+    } else {
+        // Insufficient balance, you can handle it as needed (e.g., display an error message)
+        $paymentError = "Insufficient balance. Please top up your account.";
+    }
 }
 ?>
 
