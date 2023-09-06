@@ -34,16 +34,19 @@ if ($user['balance'] >= $paymentAmount) {
     $updateStmt->execute([$newBalance, $userID]);
 
     
-    $insertSql = "INSERT INTO trx_electricity (billerID, merchantID, user_ID, accNum, amount) VALUES (?, ?, ?, ?, ?)";
+    $insertSql = "INSERT INTO trx_electricity (billerID, merchantID, user_ID, accNum, amount, billMonth, consumer, dueDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $insertStmt = $pdo->prepare($insertSql);
 
 
     $billerID = 1;
     $merchantID = 1; 
-    $accNum = $_POST['accountNo']; 
+    $accNum = $_POST['accountNo'];
+    $consumer = $_POST['consumer'];
+    $bill = $_POST['billMonth'];
+    $due = $_POST['dueDate'];
     $user_ID = $userID; 
 
-    $insertStmt->execute([$billerID, $merchantID, $user_ID, $accNum, $paymentAmount]);
+    $insertStmt->execute([$billerID, $merchantID, $user_ID, $accNum, $paymentAmount, $bill, $consumer, $due]);
 
     
     echo "success";

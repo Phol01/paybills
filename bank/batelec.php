@@ -225,29 +225,219 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               <input type="text" class="detail-input" id="accountNo" placeholder="Enter account number" />
             </div>
             <div class="detail-item">
-              <span class="detail-label">Account Name:</span>
-              <input type="text" class="detail-input" id="accountName" placeholder="Enter account name" />
+              <span class="detail-label">Consumer:</span>
+              <input type="text" class="detail-input" id="consumer" placeholder="Enter account name" />
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Bill Month:</span>
+              <input type="text" class="detail-input" id="billMonth" placeholder="Enter account name" />
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Due Date:</span>
+              <input type="text" class="detail-input" id="dueDate" placeholder="Enter account name" />
             </div>
             <div class="detail-item">
               <span class="detail-label">Email:</span>
               <input type="email" class="detail-input" id="email" placeholder="Enter email (Optional)" />
             </div>
-            <!-- Next button to confirm payment -->
             <button class="next-button" id="nextButton">Next</button>
         </div>
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.js"></script>
 
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.js"></script>
+
+<script>
+  const nextButton = document.getElementById("nextButton");
+  const nameInput = document.getElementById("consumer");
+  const accNumInput = document.getElementById("accountNo");
+  const amtInput = document.getElementById("amount");
+  const mailInput = document.getElementById("email");
+  const billInput = document.getElementById("billMonth");
+  const dueInput = document.getElementById("dueDate");
+
+  nextButton.addEventListener("click", function() {
+    document.getElementById("nameOut").textContent = nameInput.value;
+    document.getElementById("amtOut").textContent = amtInput.value;
+    document.getElementById("numOut").textContent = accNumInput.value;
+    document.getElementById("mailOut").textContent = mailInput.value;
+    document.getElementById("billOut").textContent = billInput.value;
+    document.getElementById("dueOut").textContent = dueInput.value;
+    
+    $('#myModal').modal('show');
+  });
+
+</script> 
+
+
+<script>
+       $(document).ready(function() {
+        $("#confButton").click(function() {
+            const amount = parseFloat($("#amount").val());
+            const accountNo = $("#accountNo").val();
+            const consumer = $("#consumer").val();
+            const email = $("#email").val();
+            const billMonth = $("#billMonth").val();
+            const dueDate = $("#dueDate").val();
+
+            if (isNaN(amount) || amount <= 0) {
+                Swal.fire({
+                    title: "Invalid Amount",
+                    text: "Please enter a valid positive amount.",
+                    icon: "error",
+                    confirmButtonText: "OK"
+                });
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "process_payment.php",
+                data: {
+                    amount: amount,
+                    accountNo: accountNo,
+                    consumer: consumer,
+                    email: email,
+                    billMonth: billMonth,
+                    dueDate: dueDate
+
+                },
+                success: function(response) {
+                    if (response === "success") {
+                        Swal.fire({
+                            title: "Payment Successful",
+                            text: "Your payment has been successfully processed.",
+                            icon: "success",
+                            confirmButtonText: "OK"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = "receipt.php";
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Payment Failed",
+                            text: response,
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+                    }
+                }
+            });
+        });
+    });
+        // document.getElementById("#").addEventListener("click", function() {
+            
+        //     const amount = parseFloat(document.getElementById("amount").value);
+        //     const accountNo = document.getElementById("accountNo").value;
+        //     const consumer = document.getElementById("consumer").value;
+        //     const email = document.getElementById("email").value;
+
+        //     if (isNaN(amount) || amount <= 0) {
+        //         Swal.fire({
+        //             title: "Invalid Amount",
+        //             text: "Please enter a valid positive amount.",
+        //             icon: "error",
+        //             confirmButtonText: "OK"
+        //         });
+        //         return;
+        //     }
+
+            
+        //     $.ajax({
+        //         type: "POST",
+        //         url: "process_payment.php", 
+        //         data: {
+        //             amount: amount,
+        //             accountNo: accountNo,
+        //             consumer: consumer,
+        //             email: email
+        //         },
+        //         success: function(response) {
+                    
+        //             if (response === "success") {
+                        
+        //                 Swal.fire({
+        //                     title: "Payment Successful",
+        //                     text: "Your payment has been successfully processed.",
+        //                     icon: "success",
+        //                     confirmButtonText: "OK"
+        //                 }).then((result) => {
+        //                     if (result.isConfirmed) {
+        //                         window.location.href = "receipt.php";
+        //                     }
+        //                 });
+        //             } else {
+                    
+        //                 Swal.fire({
+        //                     title: "Payment Failed",
+        //                     text: response, 
+        //                     icon: "error",
+        //                     confirmButtonText: "OK"
+        //                 });
+        //             }
+        //         }
+        //     });
+        // });
+    </script>
+
+
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Confirmation</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <table>
+            <tr>
+              <td>Consumer:</td>
+              <td id="nameOut"></td>
+            </tr>
+            <tr>
+              <td>Amount:</td>
+              <td id="amtOut"></td>
+            </tr>
+            <tr>
+              <td>Account Number:</td>
+              <td id="numOut"></td>
+            </tr>
+            <tr>
+              <td>Bill Month:</td>
+              <td id="billOut"></td>
+            </tr>
+            <tr>
+              <td>Due Date:</td>
+              <td id="dueOut"></td>
+            </tr>
+            <tr>
+              <td>Email:</td>
+              <td id="mailOut"></td>
+            </tr>
+          </table>
+        <p><b>Do you want to proceed?</b></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="confButton">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 
     <script>
         
-        document.getElementById("nextButton").addEventListener("click", function() {
+        document.getElementById("#").addEventListener("click", function() {
       
             const amount = parseFloat(document.getElementById("amount").value);
             const accountNo = document.getElementById("accountNo").value;
-            const accountName = document.getElementById("accountName").value;
+            const consumer = document.getElementById("consumer").value;
             const email = document.getElementById("email").value;
 
             
@@ -267,43 +457,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             
         });
-    </script>
-</body>
+    </script> -->
+</html>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.js"></script>
 
-<script>
-  const nextButton = document.getElementById("nextButton");
-  const nameInput = document.getElementById("accountName");
-  const accNumInput = document.getElementById("accountNo");
-  const amtInput = document.getElementById("amount");
-  const mailInput = document.getElementById("email");
-
-  // nextButton.addEventListener("click", function() {
-      
-  //     document.getElementById("nameOut").textContent = "Account Name: " + nameInput.value;
-  //     document.getElementById("amtOut").textContent = "Amount: " + amtInput.value;
-  //     document.getElementById("numOut").textContent = "Account Number: " + accNumInput.value;
-  //     document.getElementById("mailOut").textContent = "Email: " + mailInput.value;
-
-     
-  //     $('#myModal').modal('show');
-  // });
-
-  nextButton.addEventListener("click", function() {
-    document.getElementById("nameOut").textContent = nameInput.value;
-    document.getElementById("amtOut").textContent = amtInput.value;
-    document.getElementById("numOut").textContent = accNumInput.value;
-    document.getElementById("mailOut").textContent = mailInput.value;
-
-    $('#myModal').modal('show');
-  });
-
-</script> 
-
-<script>
+<!-- <script>
 
   nextButton.addEventListener("click", function() {
 
@@ -323,105 +481,4 @@ $(document).on('click', '.btn-primary', function() {
     }
   });
 });
-</script>
-
-<script>
-       
-        document.getElementById("nextButton").addEventListener("click", function() {
-            
-            const amount = parseFloat(document.getElementById("amount").value);
-            const accountNo = document.getElementById("accountNo").value;
-            const accountName = document.getElementById("accountName").value;
-            const email = document.getElementById("email").value;
-
-            if (isNaN(amount) || amount <= 0) {
-                Swal.fire({
-                    title: "Invalid Amount",
-                    text: "Please enter a valid positive amount.",
-                    icon: "error",
-                    confirmButtonText: "OK"
-                });
-                return;
-            }
-
-            
-            $.ajax({
-                type: "POST",
-                url: "process_payment.php", 
-                data: {
-                    amount: amount,
-                    accountNo: accountNo,
-                    accountName: accountName,
-                    email: email
-                },
-                success: function(response) {
-                    
-                    if (response === "success") {
-                        
-                        Swal.fire({
-                            title: "Payment Successful",
-                            text: "Your payment has been successfully processed.",
-                            icon: "success",
-                            confirmButtonText: "OK"
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                window.location.href = "receipt.php";
-                            }
-                        });
-                    } else {
-                    
-                        Swal.fire({
-                            title: "Payment Failed",
-                            text: response, 
-                            icon: "error",
-                            confirmButtonText: "OK"
-                        });
-                    }
-                }
-            });
-        });
-    </script>
-<!-- 
-
-<div class="modal fade" id="myModal">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Confirmation</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <p id="nameOut"></p>
-        <p id="amtOut"></p>
-        <p id="numOut"></p>
-        <p id="mailOut"></p> -->
-
-        <!-- HTML structure for the table
-          <table>
-            <tr>
-              <td>Account Name:</td>
-              <td id="nameOut"></td>
-            </tr>
-            <tr>
-              <td>Amount:</td>
-              <td id="amtOut"></td>
-            </tr>
-            <tr>
-              <td>Account Number:</td>
-              <td id="numOut"></td>
-            </tr>
-            <tr>
-              <td>Email:</td>
-              <td id="mailOut"></td>
-            </tr>
-          </table>
-        <p><b>Do you want to proceed?</b></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Confirm</button>
-      </div>
-    </div>
-  </div>
-</div> -->
-</html>
+</script> -->
