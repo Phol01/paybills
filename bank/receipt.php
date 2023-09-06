@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Receipt</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Receipt</title>
 </head>
 
 <style>
@@ -37,13 +37,12 @@
   }
 </style>
 
-
 <body>
-	<div class="container">
-		<h3><center>Successful Payment</center></h3>
-		<h4><center>Payment Receipt</center></h4>
-		<hr>
-		<table>
+    <div class="container">
+        <h3><center>Successful Payment</center></h3>
+        <h4><center>Payment Receipt</center></h4>
+        <hr>
+        <table>
             <tr>
               <td>Account Name:</td>
               <td id="nameOut"></td>
@@ -67,13 +66,21 @@
         </table>
         <hr>
         <table>
-        	<tr>
-        	   <td>Updated Balance: </td>
-        	   <td id="balOut"></td>
-        	</tr>
+            <tr>
+               <td>Updated Balance: </td>
+               <td id="balOut"></td>
+            </tr>
         </table>
         <hr>
         <br>
-	</div>
+        <button onclick="redirectToIndex()">Done</button> <!-- Added button -->
+    </div>
+
+    <script>
+        // JavaScript function to redirect to index.php
+        function redirectToIndex() {
+            window.location.href = "index.php";
+        }
+    </script>
 </body>
 </html>

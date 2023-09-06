@@ -76,7 +76,6 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
-
   }
 
   .category {
@@ -104,15 +103,79 @@
     justify-content: center; /* Center the grid horizontally */
 }
 
+.user-details {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.user-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.user-balance {
+    font-size: 18px;
+    color: #007bff;
+}
+
 </style>
 <title>Pay Bills</title>
 </head>
 <body>
+<?php
+session_start();
+include "login/config.php";
+
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    // Redirect to the login page if not logged in
+    header("Location: login.php");
+    exit();
+}
+
+// Include your database connection code here (config.php or any other file)
+include "login/config.php";
+
+// Get the user ID from the session
+$userID = $_SESSION['user_id'];
+
+// Retrieve the user's name from the database
+$sql = "SELECT username FROM users WHERE user_id = ?";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$userID]);
+$user = $stmt->fetch();
+
+if ($user) {
+    $userName = $user['username'];
+} else {
+    // Handle the case where the user's data couldn't be retrieved
+    $userName = "User"; // Default value
+}
+
+// Retrieve the user's balance from the database
+$sql = "SELECT balance FROM users WHERE user_id = ?";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$userID]);
+$user = $stmt->fetch();
+
+if ($user) {
+    $userBalance = $user['balance'];
+} else {
+    // Handle the case where the user's balance couldn't be retrieved
+    $userBalance = "N/A"; // Default value
+}
+?>
+
 <div class="container">
     <div class="title">Categories</div>
     <div class="search-bar">
       <input type="text" class="search-input" placeholder="Search categories">
       <button>Search</button>
+    </div>
+    <div class="user-details">
+        <div class="user-name">Hello, <?php echo $userName; ?></div>
+        <div class="user-balance">Balance: <?php echo $userBalance; ?></div>
     </div>
     <div class="save-favorites">
       <div class="save-favorites-title">Save your favorite billers</div>
@@ -122,69 +185,21 @@
       </div>
       <!-- You can list your favorite billers here -->
     </div>
-    <div class="categories text-center  ">
+   
+    <div class="categories text-center">
         <a href="electricity.php" class="category">
             <div class="category-icon">💡</div>
             Electricity
-          </a>
-          <a href="waterbill.php" class="category">
+        </a>
+        <a href="waterbill.php" class="category">
             <div class="category-icon">🚰</div>
             Water Bill
-          </a>
-      <!-- <div class="category">
-        <div class="category-icon">💻</div>
-        Internet
-      </div>
-      <div class="category">
-        <div class="category-icon">📞</div>
-        Telecoms
-      </div>
-      <div class="category">
-        <div class="category-icon">💳</div>
-        Credit cards
-      </div>
-      <div class="category">
-        <div class="category-icon">💰</div>
-        Loans
-      </div>
-      <div class="category">
-        <div class="category-icon">🏛️</div>
-        Government
-      </div>
-      <div class="category">
-        <div class="category-icon">🛡️</div>
-        Insurance
-      </div>
-      <div class="category">
-        <div class="category-icon">🚌</div>
-        Transportation
-      </div>
-      <div class="category">
-        <div class="category-icon">🏠</div>
-        Real Estate
-      </div>
-      <div class="category">
-        <div class="category-icon">⚕️</div>
-        Healthcare
-      </div>
-      <div class="category">
-        <div class="category-icon">🏫</div>
-        Schools
-      </div>
-      <div class="category">
-        <div class="category-icon">💼</div>
-        Payment Solutions
-      </div>
-      <div class="category">
-        <div class="category-icon">🌐</div>
-        Others
-      </div> -->
+        </a>
     </div>
     <div class="content-container">
       
     </div>
 </div>
-
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -212,7 +227,7 @@
           });
       }
     });
-  </script>
+</script>
   
 </body>
 </html>
