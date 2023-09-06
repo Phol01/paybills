@@ -141,13 +141,14 @@ include "login/config.php";
 $userID = $_SESSION['user_id'];
 
 
-$sql = "SELECT username FROM users WHERE user_id = ?";
+$sql = "SELECT username, fullname FROM users WHERE user_id = ?";
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$userID]);
 $user = $stmt->fetch();
 
 if ($user) {
     $userName = $user['username'];
+    $name = $user['fullname'];
 } else {
     
     $userName = "User"; 
@@ -165,6 +166,29 @@ if ($user) {
     
     $userBalance = "N/A"; 
 }
+
+$sql = "SELECT * FROM biller WHERE billerID = ?";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([1]);
+$biller = $stmt->fetch();
+
+if ($biller) {
+  // $elecID = $biller['billerID'];
+  $_SESSION['electID'] = $biller['billerID'];
+  $elecCat = $biller['billerCategory'];
+} 
+
+$sql = "SELECT * FROM biller WHERE billerID = ?";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([2]);
+$biller1 = $stmt->fetch();
+
+if ($biller1) {
+  // $h20ID = $biller1['billerID'];
+  $_SESSION['h20ID'] = $biller1['billerID'];
+  $h2oCat = $biller1['billerCategory'];
+} 
+
 ?>
 
 <div class="container">
@@ -174,7 +198,7 @@ if ($user) {
       <button>Search</button>
     </div>
     <div class="user-details">
-        <div class="user-name">Hello, <?php echo $userName; ?></div>
+        <div class="user-name">Hello, <?php echo $name; ?></div>
         <div class="user-balance">Balance: <?php echo $userBalance; ?></div>
     </div>
     <div class="save-favorites">
@@ -189,11 +213,11 @@ if ($user) {
     <div class="categories text-center">
         <a href="electricity.php" class="category">
             <div class="category-icon">💡</div>
-            Electricity
+            <?php echo $elecCat; ?>
         </a>
         <a href="waterbill.php" class="category">
             <div class="category-icon">🚰</div>
-            Water Bill
+            <?php echo $h2oCat; ?>
         </a>
     </div>
     <div class="content-container">

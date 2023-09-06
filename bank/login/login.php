@@ -6,13 +6,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["login-password"];
 
     
-    $sql = "SELECT user_id, username, email, password FROM users WHERE username = ?";
+    $sql = "SELECT user_id, fullname, username, email, password FROM users WHERE username = ?";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$username]);
     $user = $stmt->fetch();
 
     if ($user && password_verify($password, $user["password"])) {
-        .
+        
         session_start();
         $_SESSION["user_id"] = $user["user_id"];
         header("Location: ../index.php"); 

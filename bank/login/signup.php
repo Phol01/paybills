@@ -2,6 +2,7 @@
 include "config.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $fullname = $_POST["signup-fullname"];
     $username = $_POST["signup-username"];
     $email = $_POST["signup-email"];
     $password = password_hash($_POST["signup-password"], PASSWORD_DEFAULT);
@@ -20,9 +21,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Email address already exists. Please choose another email.";
     } else {
         
-        $sql = "INSERT INTO users (username, email, password, balance) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO users (fullname, username, email, password, balance) VALUES (?, ?, ?, ?, ?)";
         $stmt = $pdo->prepare($sql);
-        if ($stmt->execute([$username, $email, $password, $defaultBalance])) {
+        if ($stmt->execute([$fullname, $username, $email, $password, $defaultBalance])) {
         
             header("Location: login.php");
             exit();
@@ -114,6 +115,10 @@ body {
     <div class="form-container">
         <h2>Sign Up</h2>
         <form action="signup.php" method="post">
+            <div class="form-group">
+                <label for="signup-fullname">Full Name:</label>
+                <input type="text" id="signup-fullname" name="signup-fullname" required>
+            </div>
             <div class="form-group">
                 <label for="signup-username">Username:</label>
                 <input type="text" id="signup-username" name="signup-username" required>

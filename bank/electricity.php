@@ -3,6 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<?php 
+  session_start();
+  include "login/config.php";
+
+  $elecID = $_SESSION['electID'];
+
+  $sql = "SELECT * FROM merchant WHERE merchantID = ?";
+  $stmt = $pdo->prepare($sql);
+  $stmt->execute([1]);
+  $merchant = $stmt->fetch();
+
+  if ($merchant) {
+    $merchID = $merchant['merchantID'];
+    $_SESSION['merchantID'] = $merchant['merchantID'];
+    $merName = $merchant['name'];
+  } 
+?>
+
 <style>
     a {
       text-decoration: none; 
@@ -179,7 +198,7 @@
           <div class="supplier-logo">
             <img src="https://www.batelec1.com.ph/asset/images/batelec1logowhite.png" width="35px" alt="Logo">
           </div>
-          <div class="supplier-name">&nbsp;Batangas Electric 1</div>
+          <div class="supplier-name">&nbsp;<?php echo $merName ?></div>
           <div class="supplier-icon">></div>
         </a>
         <!-- Add more suppliers here -->

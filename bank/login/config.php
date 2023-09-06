@@ -2,7 +2,7 @@
 // Database connection parameters
 $host = "localhost"; // Your database host (e.g., localhost)
 $dbname = "bank"; // Your database name
-$username = ""; // Your database username
+$username = "root"; // Your database username
 $password = ""; // Your database password
 
 try {

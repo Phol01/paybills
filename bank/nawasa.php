@@ -28,7 +28,7 @@ if ($user) {
 }
 
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $paymentAmount = isset($_POST['amount']) ? floatval($_POST['amount']) : 0;
     $accountNo = isset($_POST['accountNo']) ? $_POST['accountNo'] : '';
     $accountName = isset($_POST['accountName']) ? $_POST['accountName'] : '';
@@ -248,16 +248,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
               <input type="email" class="detail-input" id="email" placeholder="Enter email (Optional)" />
             </div>
             <button class="next-button" id="nextButton">Next</button>
+
           </div>
     </div>
+
+
+
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.js"></script>
-<script>
+<!-- <script>
       
-        document.getElementById("nextButton").addEventListener("click", function() {
+        document.getElementById("confButton").addEventListener("click", function() {
         
             const amount = parseFloat(document.getElementById("amount").value);
             const accountNo = document.getElementById("accountNo").value;
@@ -275,14 +279,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                 return;
             }
 
-           
-
-           
             const remainingBalance = 500 - amount;
 
             
         });
-    </script>
+    </script> -->
 
 
 <script>
@@ -305,122 +306,117 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
   });
 </script> 
 
-<script>
-  $(document).ready(function() {
-    $("#cropsBtn").click(function(e) {
-        if ($('#cropsForm')[0].checkValidity()) {
-            e.preventDefault();
-
-              var formData = new FormData($('#cropsForm')[0]);
-              formData.append('action', 'inputHarvest');
-              $.ajax({
-                  url: 'php/action.php',
-                  method: 'post',
-                  data: formData,
-                  contentType: false,
-                  processData: false,
-                  success: function(response) {
-                      if (response === 'inputHarvest') {
-                          Swal.fire({
-                              icon: 'success',
-                              text: 'Your input has been Recorded!',
-                              allowOutsideClick: false,
-                              allowEscapeKey: false
-                          }).then(function() {
-                              
-                              window.location = 'main.php'
-                          });
-
-                      } else {
-                          alert(response);
-                      }
-                  }
-                });
-          }
-      })
-  });
-  
-  nextButton.addEventListener("click", function() {
-    
-    $('#myModal').modal('show');
-  });
-
- 
-$(document).on('click', '.btn-primary', function() {
-  Swal.fire({
-    title: "Payment Successful",
-    text: "Your payment has been successfully processed.",
-    icon: "success",
-    confirmButtonText: "OK"
-  }).then((result) => {
-    if (result.isConfirmed) {
-      window.location.href = "receipt.php";
-    }
-  });
-});
-</script>
-
 
 <script>
    
-    document.getElementById("nextButton").addEventListener("click", function() {
+    // document.getElementById("confButton").addEventListener("click", function() {
         
-        const amount = parseFloat(document.getElementById("amount").value);
-        const accountNo = document.getElementById("accountNo").value;
-        const accountName = document.getElementById("accountName").value;
-        const email = document.getElementById("email").value;
+    //     const amount = parseFloat(document.getElementById("amount").value);
+    //     const accountNo = document.getElementById("accountNo").value;
+    //     const accountName = document.getElementById("accountName").value;
+    //     const email = document.getElementById("email").value;
 
        
-        if (isNaN(amount) || amount <= 0) {
-            Swal.fire({
-                title: "Invalid Amount",
-                text: "Please enter a valid positive amount.",
-                icon: "error",
-                confirmButtonText: "OK"
-            });
-            return;
-        }
+    //     if (isNaN(amount) || amount <= 0) {
+    //         Swal.fire({
+    //             title: "Invalid Amount",
+    //             text: "Please enter a valid positive amount.",
+    //             icon: "error",
+    //             confirmButtonText: "OK"
+    //         });
+    //         return;
+    //     }
 
        
-        $.ajax({
-            type: "POST",
-            url: "process_payment_nawasa.php", 
-            data: {
-                amount: amount,
-                accountNo: accountNo,
-                accountName: accountName,
-                email: email
-            },
-            success: function(response) {
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "process_payment_nawasa.php", 
+    //         data: {
+    //             amount: amount,
+    //             accountNo: accountNo,
+    //             accountName: accountName,
+    //             email: email
+    //         },
+    //         success: function(response) {
                 
-                if (response === "success") {
+    //             if (response === "success") {
 
-                    Swal.fire({
-                        title: "Payment Successful",
-                        text: "Your payment has been successfully processed.",
-                        icon: "success",
-                        confirmButtonText: "OK"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = "receipt.php"; 
-                        }
-                    });
-                } else {
+    //                 Swal.fire({
+    //                     title: "Payment Successful",
+    //                     text: "Your payment has been successfully processed.",
+    //                     icon: "success",
+    //                     confirmButtonText: "OK"
+    //                 }).then((result) => {
+    //                     if (result.isConfirmed) {
+    //                         window.location.href = "receipt.php"; 
+    //                     }
+    //                 });
+    //             } else {
                     
-                    Swal.fire({
-                        title: "Payment Failed",
-                        text: response, 
-                        icon: "error",
-                        confirmButtonText: "OK"
-                    });
-                }
+    //                 Swal.fire({
+    //                     title: "Payment Failed",
+    //                     text: response, 
+    //                     icon: "error",
+    //                     confirmButtonText: "OK"
+    //                 });
+    //             }
+    //         }
+    //     });
+    // });
+      $(document).ready(function() {
+        $("#confButton").click(function() {
+            const amount = parseFloat($("#amount").val());
+            const accountNo = $("#accountNo").val();
+            const accountName = $("#accountName").val();
+            const email = $("#email").val();
+
+            if (isNaN(amount) || amount <= 0) {
+                Swal.fire({
+                    title: "Invalid Amount",
+                    text: "Please enter a valid positive amount.",
+                    icon: "error",
+                    confirmButtonText: "OK"
+                });
+                return;
             }
+
+            $.ajax({
+                type: "POST",
+                url: "process_payment_nawasa.php",
+                data: {
+                    amount: amount,
+                    accountNo: accountNo,
+                    accountName: accountName,
+                    email: email
+                },
+                success: function(response) {
+                    if (response === "success") {
+                        Swal.fire({
+                            title: "Payment Successful",
+                            text: "Your payment has been successfully processed.",
+                            icon: "success",
+                            confirmButtonText: "OK"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = "receipt.php";
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Payment Failed",
+                            text: response,
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+                    }
+                }
+            });
         });
     });
 </script>
 
 
-<!-- <div class="modal fade" id="myModal">
+<div class="modal fade" id="myModal">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -428,10 +424,6 @@ $(document).on('click', '.btn-primary', function() {
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-         <p id="nameOut"></p>
-        <p id="amtOut"></p>
-        <p id="numOut"></p>
-        <p id="mailOut"></p> 
         <table>
             <tr>
               <td>Account Name:</td>
@@ -454,9 +446,9 @@ $(document).on('click', '.btn-primary', function() {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Confirm</button>
+        <button type="button" class="btn btn-primary" id="confButton">Confirm</button>
       </div>
     </div>
   </div>
-</div> -->
+</div>
 </html>

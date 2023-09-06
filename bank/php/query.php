@@ -3,35 +3,9 @@ require_once 'config.php';
 
 class Admin extends Database{
 
-    public function trxWater($billerID, $merchantID, $userID, $accNum, $amount, $accName){
-        $sql = "INSERT INTO `trx_water`(`billerID`, `merchantID`, `userID`, `accNum`, `amount`, `accName`) VALUES (:billerID, :merchantID, :userID, :accNum, :amount, :accName)";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute(['billerID'=>$billerID, 'merchantID'=>$merchantID, 'userID'=>$userID, 'accNum'=>$accNum, 'amount'=>$amount, 'accName'=>$accName]);
-        return true;
-    }
+    public function userInfo(){
 
-        //check if the username is exist
-    public function farmer_exist($Username){
-        $sql = "SELECT username FROM farmer WHERE username = :username";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute(['username'=>$Username]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-        return $result;
-    }
-
-    public function farmer_login($username, $password){
-        $sql = "SELECT username,password FROM farmer WHERE username = :username AND password = :password"; 
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute(['username' => $username, 'password' => $password]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        return $row;
-    }
-
-    //get name of user
-    public function farmer_info($Username){
-        $sql = "SELECT CONCAT_WS(' ', fname, mname, lname) AS full_name FROM farmer WHERE username = :username";
+        $sql = "SELECT  FROM farmer WHERE username = :username";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute(['username'=>$Username]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
