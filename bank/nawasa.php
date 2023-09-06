@@ -9,13 +9,12 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-// Include your database connection code here (config.php or any other file)
-include "login/config.php"; // Corrected the include path
 
-// Get the user ID from the session
+include "login/config.php"; 
+
+
 $userID = $_SESSION['user_id'];
 
-// Retrieve the user's balance from the database
 $sql = "SELECT balance FROM users WHERE user_id = ?";
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$userID]);
@@ -24,43 +23,41 @@ $user = $stmt->fetch();
 if ($user) {
     $userBalance = $user['balance'];
 } else {
-    // Handle the case where the user's balance couldn't be retrieved
-    $userBalance = "N/A"; // Default value
+
+    $userBalance = "N/A"; 
 }
 
-// Process the payment and deduct from the user's balance
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get the payment amount from the form
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') 
     $paymentAmount = isset($_POST['amount']) ? floatval($_POST['amount']) : 0;
     $accountNo = isset($_POST['accountNo']) ? $_POST['accountNo'] : '';
     $accountName = isset($_POST['accountName']) ? $_POST['accountName'] : '';
 
-    // Check if the user has sufficient balance
     if ($userBalance >= $paymentAmount) {
-        // Deduct the payment amount from the user's balance
+    
         $newBalance = $userBalance - $paymentAmount;
 
-        // Update the user's balance in the session
+      
         $_SESSION['balance'] = $newBalance;
 
-        // Update the user's balance in the database
+        
         $updateSql = "UPDATE users SET balance = ? WHERE user_id = ?";
         $updateStmt = $pdo->prepare($updateSql);
         $updateStmt->execute([$newBalance, $userID]);
 
-        // Insert payment data into the trx_water table
+        
         $insertSql = "INSERT INTO trx_water (billerID, merchantID, user_id, accNum, amount, accName) VALUES (?, ?, ?, ?, ?, ?)";
-        $billerID = '2'; // Replace with your biller ID
-        $merchantID = '2'; // Replace with your merchant ID
+        $billerID = '2'; 
+        $merchantID = '2'; 
 
         $insertStmt = $pdo->prepare($insertSql);
         $insertStmt->execute([$billerID, $merchantID, $userID, $accountNo, $paymentAmount, $accountName]);
 
-        // Redirect to the same page to display the updated balance
+        
         header("Location: nawasa.php");
         exit();
     } else {
-        // Insufficient balance, you can handle it as needed (e.g., display an error message)
+        
         $paymentError = "Insufficient balance. Please top up your account.";
     }
 }
@@ -80,12 +77,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 
   td {
-    /*padding-left: 15px;*/
+    
     padding-bottom: 10px;
     text-align: left;
   }
   td:nth-child(2) {
-    padding-left: 20px; /* Adjust the value to increase or decrease left padding */
+    padding-left: 20px; 
   }
  body {
     font-family: Arial, sans-serif;
@@ -199,19 +196,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     background-color: #0056b3;
   }
   .circle {
-    width: 65px; /* Adjust this value to control the size of the circle */
-    height: 65px; /* Make the width and height equal for a perfect circle */
-    border-radius: 50%; /* Make it a circle by using 50% border radius */
-    overflow: hidden; /* Hide any content that goes beyond the circle */
-    text-align: center; /* Center the image horizontally within the circle */
-    margin: 0 auto; /* Center the circle horizontally on the page */
-    background-color: #f0f0f0; /* Set a background color if you want a circular container */
+    width: 65px; 
+    height: 65px; 
+    border-radius: 50%;
+    overflow: hidden; 
+    text-align: center; 
+    margin: 0 auto; 
+    background-color: #f0f0f0; 
 }
 .circle img {
-    max-width: 100%; /* Make the image fill the circular container */
-    height: auto; /* Maintain the aspect ratio of the image */
-    display: block; /* Remove any extra spacing below the image */
-    margin: 0 auto; /* Center the image horizontally within the circle */
+    max-width: 100%; 
+    height: auto; 
+    display: block; 
+    margin: 0 auto; 
 }
 
   
@@ -259,15 +256,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.js"></script>
 <script>
-        // JavaScript logic for processing payment and deducting balance will go here
+      
         document.getElementById("nextButton").addEventListener("click", function() {
-            // Get payment details from input fields
+        
             const amount = parseFloat(document.getElementById("amount").value);
             const accountNo = document.getElementById("accountNo").value;
             const accountName = document.getElementById("accountName").value;
             const email = document.getElementById("email").value;
 
-            // Make sure the amount is valid and not negative
+          
             if (isNaN(amount) || amount <= 0) {
                 Swal.fire({
                     title: "Invalid Amount",
@@ -278,13 +275,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 return;
             }
 
-            // Perform balance deduction logic here
-            // You need to fetch the user's balance from the database and update it accordingly
-            // If the deduction is successful, you can show a success message and redirect to a receipt page
-            // If the deduction fails (insufficient balance), show an error message
+           
 
-            // For demonstration purposes, I'll assume a successful deduction for now
-            const remainingBalance = 500 - amount; // Replace with actual logic
+           
+            const remainingBalance = 500 - amount;
 
             
         });
@@ -300,10 +294,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   nextButton.addEventListener("click", function() {
       
-      // document.getElementById("nameOut").textContent = "Account Name: " + nameInput.value;
-      // document.getElementById("amtOut").textContent = "Amount: " + amtInput.value;
-      // document.getElementById("numOut").textContent = "Account Number: " + accNumInput.value;
-      // document.getElementById("mailOut").textContent = "Email: " + mailInput.value;
+    
       document.getElementById("nameOut").textContent = nameInput.value;
       document.getElementById("amtOut").textContent = amtInput.value;
       document.getElementById("numOut").textContent = accNumInput.value;
@@ -336,7 +327,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                               allowOutsideClick: false,
                               allowEscapeKey: false
                           }).then(function() {
-                              // this gets run after the OK button is clicked
+                              
                               window.location = 'main.php'
                           });
 
@@ -371,15 +362,15 @@ $(document).on('click', '.btn-primary', function() {
 
 
 <script>
-    // JavaScript logic for processing payment and deducting balance will go here
+   
     document.getElementById("nextButton").addEventListener("click", function() {
-        // Get payment details from input fields
+        
         const amount = parseFloat(document.getElementById("amount").value);
         const accountNo = document.getElementById("accountNo").value;
         const accountName = document.getElementById("accountName").value;
         const email = document.getElementById("email").value;
 
-        // Make sure the amount is valid and not negative
+       
         if (isNaN(amount) || amount <= 0) {
             Swal.fire({
                 title: "Invalid Amount",
@@ -390,10 +381,10 @@ $(document).on('click', '.btn-primary', function() {
             return;
         }
 
-        // Send an AJAX request to process the payment
+       
         $.ajax({
             type: "POST",
-            url: "process_payment.php", // Create a new PHP file for payment processing
+            url: "process_payment_nawasa.php", 
             data: {
                 amount: amount,
                 accountNo: accountNo,
@@ -401,9 +392,9 @@ $(document).on('click', '.btn-primary', function() {
                 email: email
             },
             success: function(response) {
-                // Handle the response from the server (e.g., success or error message)
+                
                 if (response === "success") {
-                    // Payment successful, show success message and redirect
+
                     Swal.fire({
                         title: "Payment Successful",
                         text: "Your payment has been successfully processed.",
@@ -411,14 +402,14 @@ $(document).on('click', '.btn-primary', function() {
                         confirmButtonText: "OK"
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            window.location.href = "receipt.php"; // Redirect to receipt page
+                            window.location.href = "receipt.php"; 
                         }
                     });
                 } else {
-                    // Payment failed, show an error message
+                    
                     Swal.fire({
                         title: "Payment Failed",
-                        text: response, // Display the error message from the server
+                        text: response, 
                         icon: "error",
                         confirmButtonText: "OK"
                     });
@@ -429,8 +420,7 @@ $(document).on('click', '.btn-primary', function() {
 </script>
 
 
-
-<div class="modal fade" id="myModal">
+<!-- <div class="modal fade" id="myModal">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -438,10 +428,10 @@ $(document).on('click', '.btn-primary', function() {
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        <!-- <p id="nameOut"></p>
+         <p id="nameOut"></p>
         <p id="amtOut"></p>
         <p id="numOut"></p>
-        <p id="mailOut"></p> -->
+        <p id="mailOut"></p> 
         <table>
             <tr>
               <td>Account Name:</td>
@@ -468,5 +458,5 @@ $(document).on('click', '.btn-primary', function() {
       </div>
     </div>
   </div>
-</div>
+</div> -->
 </html>

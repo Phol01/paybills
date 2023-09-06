@@ -98,9 +98,9 @@
   }
   .text-center {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Adjust the number of columns as needed */
+    grid-template-columns: repeat(2, 1fr); 
     gap: 10px;
-    justify-content: center; /* Center the grid horizontally */
+    justify-content: center; 
 }
 
 .user-details {
@@ -127,20 +127,20 @@
 session_start();
 include "login/config.php";
 
-// Check if the user is logged in
+
 if (!isset($_SESSION['user_id'])) {
-    // Redirect to the login page if not logged in
+    
     header("Location: login.php");
     exit();
 }
 
-// Include your database connection code here (config.php or any other file)
+
 include "login/config.php";
 
-// Get the user ID from the session
+
 $userID = $_SESSION['user_id'];
 
-// Retrieve the user's name from the database
+
 $sql = "SELECT username FROM users WHERE user_id = ?";
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$userID]);
@@ -149,11 +149,11 @@ $user = $stmt->fetch();
 if ($user) {
     $userName = $user['username'];
 } else {
-    // Handle the case where the user's data couldn't be retrieved
-    $userName = "User"; // Default value
+    
+    $userName = "User"; 
 }
 
-// Retrieve the user's balance from the database
+
 $sql = "SELECT balance FROM users WHERE user_id = ?";
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$userID]);
@@ -162,8 +162,8 @@ $user = $stmt->fetch();
 if ($user) {
     $userBalance = $user['balance'];
 } else {
-    // Handle the case where the user's balance couldn't be retrieved
-    $userBalance = "N/A"; // Default value
+    
+    $userBalance = "N/A"; 
 }
 ?>
 
