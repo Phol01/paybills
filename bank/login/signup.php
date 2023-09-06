@@ -6,28 +6,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["signup-email"];
     $password = password_hash($_POST["signup-password"], PASSWORD_DEFAULT);
 
-    // Default balance for a new user
-    $defaultBalance = 1000.00; // You can set any initial balance value here
 
-    // Check if the email already exists in the database
+    $defaultBalance = 1000.00; 
+
+    
     $checkEmailQuery = "SELECT COUNT(*) FROM users WHERE email = ?";
     $stmt = $pdo->prepare($checkEmailQuery);
     $stmt->execute([$email]);
     $emailExists = (bool) $stmt->fetchColumn();
 
     if ($emailExists) {
-        // Handle the case where the email already exists (e.g., display an error message).
+        
         echo "Email address already exists. Please choose another email.";
     } else {
-        // Insert user data into the database, including the default balance
+        
         $sql = "INSERT INTO users (username, email, password, balance) VALUES (?, ?, ?, ?)";
         $stmt = $pdo->prepare($sql);
         if ($stmt->execute([$username, $email, $password, $defaultBalance])) {
-            // Registration successful, you can redirect the user to a login page.
+        
             header("Location: login.php");
             exit();
         } else {
-            // Handle registration failure.
+            
             echo "Registration failed.";
         }
     }

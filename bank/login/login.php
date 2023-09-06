@@ -5,21 +5,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["login-username"];
     $password = $_POST["login-password"];
 
-    // Retrieve user data from the database based on the username
+    
     $sql = "SELECT user_id, username, email, password FROM users WHERE username = ?";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$username]);
     $user = $stmt->fetch();
 
     if ($user && password_verify($password, $user["password"])) {
-        // Login successful, you can set a session or cookie to maintain the user's session.
-        // Redirect the user to the dashboard outside the login folder.
+        .
         session_start();
         $_SESSION["user_id"] = $user["user_id"];
-        header("Location: ../index.php"); // Adjust the path to your dashboard
+        header("Location: ../index.php"); 
         exit();
     } else {
-        // Handle login failure (e.g., incorrect username or password).
+       
         echo "Login failed.";
     }
 }
