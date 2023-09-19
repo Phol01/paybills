@@ -12,12 +12,11 @@
   }
 
   td {
-    /*padding-left: 15px;*/
     padding: 10px;
     text-align: left;
   }
   td:nth-child(2) {
-    padding-left: 20px; /* Adjust the value to increase or decrease left padding */
+    padding-left: 20px; 
   }
  body {
     font-family: Arial, sans-serif;
@@ -73,13 +72,40 @@
         </table>
         <hr>
         <br>
-        <button onclick="redirectToIndex()">Done</button> <!-- Added button -->
+        <button onclick="redirectToIndex()">Done</button> 
     </div>
 
     <script>
-        // JavaScript function to redirect to index.php
+    
         function redirectToIndex() {
             window.location.href = "index.php";
+        }
+
+        
+        document.getElementById("nameOut").textContent = sessionStorage.getItem("nameOut");
+        document.getElementById("amtOut").textContent = sessionStorage.getItem("amtOut");
+        document.getElementById("numOut").textContent = sessionStorage.getItem("numOut");
+        document.getElementById("mailOut").textContent = sessionStorage.getItem("mailOut");
+        
+        
+        const referenceID = generateReferenceID();
+        document.getElementById("refOut").textContent = referenceID;
+
+        
+        const updatedBalance = sessionStorage.getItem("balance");
+        document.getElementById("balOut").textContent = Balance;
+
+      
+
+        function generateReferenceID() {
+            const characters = "0123456789";
+            const length = 10; 
+            let result = "";
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * characters.length);
+                result += characters.charAt(randomIndex);
+            }
+            return result;
         }
     </script>
 </body>

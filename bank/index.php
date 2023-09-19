@@ -119,6 +119,23 @@
     color: #007bff;
 }
 
+.transaction-history {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none; 
+    color: inherit; 
+}
+
+.transaction-history:hover {
+    background-color: #f0f0f0;
+}
+
+
 </style>
 <title>Pay Bills</title>
 </head>
@@ -200,6 +217,7 @@ if ($biller1) {
     <div class="user-details">
         <div class="user-name">Hello, <?php echo $name; ?></div>
         <div class="user-balance">Balance: <?php echo $userBalance; ?></div>
+        
     </div>
     <div class="save-favorites">
       <div class="save-favorites-title">Save your favorite billers</div>
@@ -219,6 +237,11 @@ if ($biller1) {
             <div class="category-icon">🚰</div>
             <?php echo $h2oCat; ?>
         </a>
+        <a href="transaction_history.php" class="category">
+            <div class="category-icon">📚</div>
+            Transaction History
+        </a>
+
     </div>
     <div class="content-container">
       

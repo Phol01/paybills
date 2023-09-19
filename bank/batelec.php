@@ -39,6 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         $_SESSION['balance'] = $newBalance;
 
+        
+
       
         $updateSql = "UPDATE users SET balance = ? WHERE user_id = ?";
         $updateStmt = $pdo->prepare($updateSql);
@@ -267,11 +269,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     document.getElementById("mailOut").textContent = mailInput.value;
     document.getElementById("billOut").textContent = billInput.value;
     document.getElementById("dueOut").textContent = dueInput.value;
+  
     
     $('#myModal').modal('show');
+
+     // Store values in session variables
+     sessionStorage.setItem("nameOut", nameInput.value);
+    sessionStorage.setItem("amtOut", amtInput.value);
+    sessionStorage.setItem("numOut", accNumInput.value);
+    sessionStorage.setItem("mailOut", mailInput.value);
+    sessionStorage.setItem("billOut", billInput.value);
+    sessionStorage.setItem("dueOut", dueInput.value);
   });
 
 </script> 
+
+
 
 
 <script>
@@ -330,60 +343,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             });
         });
     });
-        // document.getElementById("#").addEventListener("click", function() {
-            
-        //     const amount = parseFloat(document.getElementById("amount").value);
-        //     const accountNo = document.getElementById("accountNo").value;
-        //     const consumer = document.getElementById("consumer").value;
-        //     const email = document.getElementById("email").value;
-
-        //     if (isNaN(amount) || amount <= 0) {
-        //         Swal.fire({
-        //             title: "Invalid Amount",
-        //             text: "Please enter a valid positive amount.",
-        //             icon: "error",
-        //             confirmButtonText: "OK"
-        //         });
-        //         return;
-        //     }
-
-            
-        //     $.ajax({
-        //         type: "POST",
-        //         url: "process_payment.php", 
-        //         data: {
-        //             amount: amount,
-        //             accountNo: accountNo,
-        //             consumer: consumer,
-        //             email: email
-        //         },
-        //         success: function(response) {
-                    
-        //             if (response === "success") {
-                        
-        //                 Swal.fire({
-        //                     title: "Payment Successful",
-        //                     text: "Your payment has been successfully processed.",
-        //                     icon: "success",
-        //                     confirmButtonText: "OK"
-        //                 }).then((result) => {
-        //                     if (result.isConfirmed) {
-        //                         window.location.href = "receipt.php";
-        //                     }
-        //                 });
-        //             } else {
-                    
-        //                 Swal.fire({
-        //                     title: "Payment Failed",
-        //                     text: response, 
-        //                     icon: "error",
-        //                     confirmButtonText: "OK"
-        //                 });
-        //             }
-        //         }
-        //     });
-        // });
+     
     </script>
+
+    
 
 
 <div class="modal fade" id="myModal">
@@ -430,55 +393,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </div>
 </div>
 
-<!-- 
-    <script>
-        
-        document.getElementById("#").addEventListener("click", function() {
-      
-            const amount = parseFloat(document.getElementById("amount").value);
-            const accountNo = document.getElementById("accountNo").value;
-            const consumer = document.getElementById("consumer").value;
-            const email = document.getElementById("email").value;
 
-            
-            if (isNaN(amount) || amount <= 0) {
-                Swal.fire({
-                    title: "Invalid Amount",
-                    text: "Please enter a valid positive amount.",
-                    icon: "error",
-                    confirmButtonText: "OK"
-                });
-                return;
-            }
-
-          
-
-            const remainingBalance = 500 - amount; 
-
-            
-        });
-    </script> -->
 </html>
 
 
-<!-- <script>
-
-  nextButton.addEventListener("click", function() {
-
-    $('#myModal').modal('show');
-  });
-
- 
-$(document).on('click', '.btn-primary', function() {
-  Swal.fire({
-    title: "Payment Successful",
-    text: "Your payment has been successfully processed.",
-    icon: "success",
-    confirmButtonText: "OK"
-  }).then((result) => {
-    if (result.isConfirmed) {
-      window.location.href = "receipt.php"; 
-    }
-  });
-});
-</script> -->

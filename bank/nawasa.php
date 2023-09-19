@@ -39,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       
         $_SESSION['balance'] = $newBalance;
+        
 
         
         $updateSql = "UPDATE users SET balance = ? WHERE user_id = ?";
@@ -303,6 +304,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       
       $('#myModal').modal('show');
+
+       // Store values in session variables
+     sessionStorage.setItem("nameOut", nameInput.value);
+    sessionStorage.setItem("amtOut", amtInput.value);
+    sessionStorage.setItem("numOut", accNumInput.value);
+    sessionStorage.setItem("mailOut", mailInput.value);
+    sessionStorage.setItem("billOut", billInput.value);
+   
   });
 </script> 
 
