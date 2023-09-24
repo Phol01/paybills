@@ -4,30 +4,51 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-  body {
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    z-index: -1; /* Place the overlay behind the content */
+}
+
+body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-image: url('bills_background.jpg'); /* Replace 'bills_background.jpg' with the actual file path */
+    background-size: cover; /* Ensure the image covers the entire background */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
     margin: 0;
     padding: 0;
-  }
-  a {
-      text-decoration: none; 
-      color: inherit; 
-    }
-  
-  .container {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    background-color: rgba(173, 216, 230, 0.85); /* Slightly lighter baby blue background */
+    border-radius: 10px; /* Optional: Add rounded corners for a smoother blend */
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for depth */
     padding: 20px;
     width: 90%;
     max-width: 400px;
     margin: 40px auto;
-  }
+}
+
+
+
+
+
+a {
+      text-decoration: none; 
+      color: inherit; 
+    }
+
+
   
   .title {
     font-size: 24px;
     margin-bottom: 20px;
+    color: #333333; /* Gray color */
   }
 
   .search-bar {
@@ -57,6 +78,7 @@
   .save-favorites-title {
     font-weight: bold;
     margin-bottom: 10px;
+    color: #333333; /* Gray color */
   }
 
   .add-button {
@@ -86,6 +108,7 @@
     border: 1px solid #ccc;
     border-radius: 6px;
     cursor: pointer;
+    background-color: #ffffff;
   }
 
   .category:hover {
@@ -95,6 +118,7 @@
   .category-icon {
     font-size: 24px; 
     margin-bottom: 8px;
+    color: #333333; /* Gray color */
   }
   .text-center {
     display: grid;
@@ -112,11 +136,18 @@
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
+    color: #333333; /* Gray color */
 }
 
 .user-balance {
     font-size: 18px;
     color: #007bff;
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid #ccc; /* Color of the line */
+    margin: 20px 0; /* Spacing above and below the line */
 }
 
 .transaction-history {
@@ -127,15 +158,13 @@
     border: 1px solid #ccc;
     border-radius: 6px;
     cursor: pointer;
-    text-decoration: none; 
-    color: inherit; 
+    text-decoration: none;
+    color: inherit;
 }
 
 .transaction-history:hover {
     background-color: #f0f0f0;
 }
-
-
 </style>
 <title>Pay Bills</title>
 </head>
@@ -216,7 +245,8 @@ if ($biller1) {
     </div>
     <div class="user-details">
         <div class="user-name">Hello, <?php echo $name; ?></div>
-        <div class="user-balance">Balance: <?php echo $userBalance; ?></div>
+        <div class="user-balance" style="color: black;">Balance: <?php echo $userBalance; ?></div>
+
         
     </div>
     <div class="save-favorites">
@@ -229,21 +259,24 @@ if ($biller1) {
     </div>
    
     <div class="categories text-center">
-        <a href="electricity.php" class="category">
-            <div class="category-icon">💡</div>
-            <?php echo $elecCat; ?>
-        </a>
-        <a href="waterbill.php" class="category">
-            <div class="category-icon">🚰</div>
-            <?php echo $h2oCat; ?>
-        </a>
-        <a href="transaction_history.php" class="category">
-            <div class="category-icon">📚</div>
-            Transaction History
-        </a>
+    <a href="electricity.php" class="category">
+        <div class="category-icon">💡</div>
+        <?php echo $elecCat; ?>
+    </a>
+    <a href="waterbill.php" class="category">
+        <div class="category-icon">🚰</div>
+        <?php echo $h2oCat; ?>
+    </a>
+</div>
 
-    </div>
+<div class="transaction-history">
+    <a href="transaction_history.php" class="category">
+        <div class="category-icon">📚</div>
+        Transaction History
+    </a>
+</div>
     <div class="content-container">
+    <button class="logout-button" onclick="logout()">Logout</button>
       
     </div>
 </div>
@@ -275,6 +308,12 @@ if ($biller1) {
       }
     });
 </script>
+<script>
+        function logout() {
+            // Clear any session data or perform other logout tasks if necessary
+            window.location.href = 'login/login.php'; // Redirect to the login page
+        }
+    </script>
   
 </body>
 </html>

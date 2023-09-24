@@ -61,15 +61,22 @@ $resultWater = $stmtWater->get_result();
     <style>
         /* Add your CSS styles for formatting the receipt-like content here */
         body {
-            font-family: Arial, sans-serif;
-        }
-
+    font-family: Arial, sans-serif;
+    background-image: url('bills_background.jpg'); /* Replace 'bills_background.jpg' with the actual file path */
+    background-size: cover; /* Ensure the image covers the entire background */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    margin: 0;
+    padding: 0;
+}
         .container {
+            background-color: rgba(255, 255, 255, 1); /* Solid white background */
+    border-radius: 10px; /* Optional: Add rounded corners for a smoother blend */
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for depth */
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
             border: 1px solid #ccc;
-            border-radius: 10px;
+            border-radius: 10px;    
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 

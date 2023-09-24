@@ -89,22 +89,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     padding-left: 15px;
     padding-bottom: 10px;
   }
- body {
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    z-index: -1; /* Place the overlay behind the content */
+}
+
+body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-image: url('bills_background.jpg'); /* Replace 'bills_background.jpg' with the actual file path */
+    background-size: cover; /* Ensure the image covers the entire background */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
     margin: 0;
     padding: 0;
-  }
-  
-  .container {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 1); /* Solid white background */
+    border-radius: 10px; /* Optional: Add rounded corners for a smoother blend */
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for depth */
     padding: 20px;
     width: 90%;
     max-width: 400px;
     margin: 40px auto;
-  }
+}
 
   .back-button {
     margin-bottom: 10px;
