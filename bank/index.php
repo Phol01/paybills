@@ -161,6 +161,27 @@ a {
     text-decoration: none;
     color: inherit;
 }
+* Add your CSS styles here */
+  .content-container {
+    text-align: center;
+  }
+
+  .logout-button {
+    background-color: #007BFF; /* Background color */
+    color: #fff; /* Text color */
+    border: none;
+    padding: 10px 20px; /* Adjust padding as needed */
+    font-size: 16px; /* Adjust font size as needed */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer;
+  }
+
+  /* Hover effect */
+  .logout-button:hover {
+    background-color: #0056b3; /* Darker background color on hover */
+  }
+</style>
+
 
 .transaction-history:hover {
     background-color: #f0f0f0;
@@ -276,9 +297,8 @@ if ($biller1) {
     </a>
 </div>
     <div class="content-container">
-    <button class="logout-button" onclick="logout()">Logout</button>
-      
-    </div>
+  <button class="logout-button" onclick="logout()">Logout</button>
+</div>
 </div>
 
 <script>

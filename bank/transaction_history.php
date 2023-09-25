@@ -115,6 +115,21 @@ $resultWater = $stmtWater->get_result();
         .print-button:hover {
             background-color: #0056b3;
         }
+        .back-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.back-button:hover {
+  background-color: #0056b3;
+}
+
+
     </style>
 </head>
 <body>
@@ -171,11 +186,12 @@ $resultWater = $stmtWater->get_result();
             echo "No water transaction history found.";
         }
         ?>
-
         <div>
-            <!-- Add a back button or link to navigate back to the previous page -->
-            <a href="index.php">Back to Home</a>
-        </div>
+  <a href="index.php" class="back-button">Back to Home</a>
+</div>
+
+
+
     </div>
 
     <script>
