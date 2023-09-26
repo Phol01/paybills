@@ -249,9 +249,10 @@ body {
 </div>
 
             <div class="detail-item">
-              <span class="detail-label">Due Date:</span>
-              <input type="text" class="detail-input" id="dueDate" placeholder="Enter account name" />
-            </div>
+  <span class="detail-label">Due Date:</span>
+  <input type="date" class="detail-input" id="billMonth" />
+</div>
+
             <div class="detail-item">
               <span class="detail-label">Email:</span>
               <input type="email" class="detail-input" id="email" placeholder="Enter email (Optional)" />
