@@ -244,15 +244,13 @@ body {
               <input type="text" class="detail-input" id="consumer" placeholder="Enter account name" />
             </div>
             <div class="detail-item">
-  <span class="detail-label">Bill Month:</span>
-  <input type="date" class="detail-input" id="billMonth" />
-</div>
-
+              <span class="detail-label">Bill Month:</span>
+              <input type="text" class="detail-input" id="billMonth" placeholder="Enter account name" />
+            </div>
             <div class="detail-item">
-  <span class="detail-label">Due Date:</span>
-  <input type="date" class="detail-input" id="billMonth" />
-</div>
-
+              <span class="detail-label">Due Date:</span>
+              <input type="text" class="detail-input" id="dueDate" placeholder="Enter account name" />
+            </div>
             <div class="detail-item">
               <span class="detail-label">Email:</span>
               <input type="email" class="detail-input" id="email" placeholder="Enter email (Optional)" />
@@ -410,5 +408,4 @@ body {
 
 
 </html>
-
 

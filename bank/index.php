@@ -1,8 +1,13 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pay Bills</title>
+</head>
 <style>
 body::before {
     content: "";
@@ -180,18 +185,103 @@ a {
   .logout-button:hover {
     background-color: #0056b3; /* Darker background color on hover */
   }
-</style>
-
-
 .transaction-history:hover {
     background-color: #f0f0f0;
 }
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+.chosen-biller-container {
+    margin-top: 10px;
+}
+
+.category {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #ffffff;
+    text-decoration: none;
+    color: inherit;
+    position: relative; /* Add this line *
+}
+
+.category:hover {
+    background-color: #f0f0f0;
+}
+
+.category-icon {
+    font-size: 24px; 
+    margin-bottom: 8px;
+    color: #333333; /* Gray color */
+}
+.close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
 </style>
-<title>Pay Bills</title>
-</head>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Choose a Biller</h2>
+        <button id="electricityBtn">Electricity</button>
+        <button id="waterBtn">Water</button>
+    </div>
+</div>
+
+
+
 <body>
 <?php
-session_start();
 include "login/config.php";
 
 
@@ -271,14 +361,15 @@ if ($biller1) {
         
     </div>
     <div class="save-favorites">
-      <div class="save-favorites-title">Save your favorite billers</div>
-      <div class="category">
+    <div class="save-favorites-title">Save your favorite billers</div>
+    <div class="category">
         <div class="category-icon">➕</div>
         Add
-      </div>
-      <!-- You can list your favorite billers here -->
     </div>
-   
+    <div id="chosenBillerContainer" class="chosen-biller-container"></div>
+</div>
+
+
     <div class="categories text-center">
     <a href="electricity.php" class="category">
         <div class="category-icon">💡</div>
@@ -333,6 +424,124 @@ if ($biller1) {
             // Clear any session data or perform other logout tasks if necessary
             window.location.href = 'login/login.php'; // Redirect to the login page
         }
+    </script>
+
+    <script>
+      // Add this at the end of your <script> section
+document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("myModal");
+    const electricityBtn = document.getElementById("electricityBtn");
+    const waterBtn = document.getElementById("waterBtn");
+
+    // When the user clicks the button, open the modal
+    document.querySelector(".save-favorites").addEventListener("click", function() {
+        modal.style.display = "block";
+    });
+
+    // When the user clicks on <span> (x), close the modal
+    document.querySelector(".close").addEventListener("click", function() {
+        modal.style.display = "none";
+    });
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    };
+
+    // Handle button clicks in the modal
+    electricityBtn.addEventListener("click", function() {
+        displayChosenBiller("Electricity");
+    });
+
+    waterBtn.addEventListener("click", function() {
+        displayChosenBiller("Water");
+    });
+
+    function displayChosenBiller(biller) {
+    const chosenBillerContainer = document.getElementById("chosenBillerContainer");
+
+    const newCategoryElement = document.createElement("a");
+    newCategoryElement.classList.add("category");
+    newCategoryElement.href = "#" // Set the appropriate href
+
+    const categoryIcon = document.createElement("div");
+    categoryIcon.classList.add("category-icon");
+    
+    // Set the category icon based on the chosen biller
+    if (biller === "Electricity") {
+        categoryIcon.textContent = "💡";
+    } else if (biller === "Water") {
+        categoryIcon.textContent = "🚰";
+    } else {
+        categoryIcon.textContent = "❓"; // Default icon if biller is not recognized
+    }
+
+    const categoryText = document.createElement("div");
+    categoryText.textContent = biller;
+
+    newCategoryElement.appendChild(categoryIcon);
+    newCategoryElement.appendChild(categoryText);
+
+    const closeButton = document.createElement("button");
+    closeButton.classList.add("close-button");
+    closeButton.textContent = "X";
+    closeButton.addEventListener("click", function() {
+        newCategoryElement.remove();
+        updateLocalStorage();
+    });
+    newCategoryElement.appendChild(closeButton);
+
+    chosenBillerContainer.appendChild(newCategoryElement);
+
+    updateLocalStorage();
+
+    modal.style.display = "none";
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const chosenBillerContainer = document.getElementById("chosenBillerContainer");
+
+    const chosenBillers = JSON.parse(localStorage.getItem("chosenBillers")) || [];
+    chosenBillers.forEach(biller => {
+        const newCategoryElement = document.createElement("div");
+        newCategoryElement.classList.add("category");
+        newCategoryElement.textContent = biller;
+
+        const closeButton = document.createElement("button");
+        closeButton.classList.add("close-button");
+        closeButton.textContent = "X";
+        closeButton.addEventListener("click", function() {
+            newCategoryElement.remove();
+            updateLocalStorage();
+        });
+
+        newCategoryElement.appendChild(closeButton);
+
+        chosenBillerContainer.appendChild(newCategoryElement);
+
+        newCategoryElement.addEventListener("click", function() {
+            redirectToPage(biller);
+        });
+    });
+});
+
+function redirectToPage(biller) {
+    switch (biller) {
+        case "Electricity":
+            window.location.href = "batelec.php";
+            break;
+        case "Water":
+            window.location.href = "nawasa.php";
+            break;
+        default:
+            console.error("Unknown biller:", biller);
+    }
+}
+
+});
+
     </script>
   
 </body>

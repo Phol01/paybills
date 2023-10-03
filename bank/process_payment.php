@@ -22,11 +22,7 @@ if (!$user) {
     echo "User not found";
     exit();
 }
-
-
 $paymentAmount = isset($_POST['amount']) ? floatval($_POST['amount']) : 0;
-
-
 if ($user['balance'] >= $paymentAmount) {
     $newBalance = $user['balance'] - $paymentAmount;
     $updateSql = "UPDATE users SET balance = ? WHERE user_id = ?";
@@ -45,10 +41,7 @@ if ($user['balance'] >= $paymentAmount) {
     $bill = $_POST['billMonth'];
     $due = $_POST['dueDate'];
     $user_ID = $userID; 
-
-    $insertStmt->execute([$billerID, $merchantID, $user_ID, $accNum, $paymentAmount, $bill, $consumer, $due]);
-
-    
+    $insertStmt->execute([$billerID, $merchantID, $user_ID, $accNum, $paymentAmount, $bill, $consumer, $due]);   
     echo "success";
 } else {
     
