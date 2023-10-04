@@ -230,6 +230,7 @@ a {
     font-size: 16px;
     cursor: pointer;
 }
+
 .chosen-biller-container {
     margin-top: 10px;
 }
@@ -266,7 +267,30 @@ a {
     font-size: 16px;
     cursor: pointer;
 }
+#electricityBtn {
+            background-color: #3498db; /* Set the background color */
+            color: white; /* Set the text color */
+            border: none; /* Remove the button border */
+            padding: 10px 20px; /* Add padding to the button */
+            border-radius: 5px; /* Add rounded corners */
+            cursor: pointer; /* Change cursor on hover */
+        }
 
+        #electricityBtn:hover {
+            background-color: #2980b9; /* Change background color on hover */
+        }
+#waterBtn {
+            background-color: #3498db; /* Set the background color */
+            color: white; /* Set the text color */
+            border: none; /* Remove the button border */
+            padding: 10px 20px; /* Add padding to the button */
+            border-radius: 5px; /* Add rounded corners */
+            cursor: pointer; /* Change cursor on hover */
+        }
+
+        #electricityBtn:hover {
+            background-color: #2980b9; /* Change background color on hover */
+        }
 
 </style>
 <div id="myModal" class="modal">
@@ -275,6 +299,7 @@ a {
         <h2>Choose a Biller</h2>
         <button id="electricityBtn">Electricity</button>
         <button id="waterBtn">Water</button>
+        
     </div>
 </div>
 
