@@ -215,6 +215,47 @@ body {
           <div class="supplier-icon">></div>
         </a>
         <!-- Add more suppliers here -->
+        <div class="supplier-list">
+        <a href="meralco.php" class="supplier-item">
+          <div class="supplier-logo">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/fc/Meralco.svg/1200px-Meralco.svg.png" width="35px" alt="Logo">
+          </div>
+          <div class="supplier-name">&nbsp;Meralco</div>
+          <div class="supplier-icon">></div>
+        </a>
+        <div class="supplier-list">
+        <a href="aboitiz.php" class="supplier-item">
+          <div class="supplier-logo">
+            <img src="https://visayanelectric.com/admin/we_uploads/aplogo.jpg" width="35px" alt="Logo">
+          </div>
+          <div class="supplier-name">&nbsp;Aboitiz Power</div>
+          <div class="supplier-icon">></div>
+        </a>
+        <div class="supplier-list">
+        <a href="veco.php" class="supplier-item">
+          <div class="supplier-logo">
+            <img src="https://d1hbpr09pwz0sk.cloudfront.net/logo_url/visayan-electric-company-inc-32fd47dd" width="35px" alt="Logo">
+          </div>
+          <div class="supplier-name">&nbsp;Veco</div>
+          <div class="supplier-icon">></div>
+        </a>
+        <div class="supplier-list">
+        <a href="visayanelectric.php" class="supplier-item">
+          <div class="supplier-logo">
+            <img src="https://aboitizpower.com/uploads/media/Visayan-Electric-1.png" width="35px" alt="Logo">
+          </div>
+          <div class="supplier-name">&nbsp;Visayan Electric</div>
+          <div class="supplier-icon">></div>
+        </a>
+        <div class="supplier-list">
+        <a href="peco.php" class="supplier-item">
+          <div class="supplier-logo">
+            <img src="https://imtnews.ph/dashboard/uploads/2019/11/08/1573189708243.jpg" width="35px" alt="Logo">
+          </div>
+          <div class="supplier-name">&nbsp;Peco</div>
+          <div class="supplier-icon">></div>
+        </a>
+
       </div>
 <script>
     function loadContent(url) {
